@@ -79,8 +79,9 @@ def statment_accept(code_in):
 
     return tokens
 
+
 def stackimp(input_string):
-    global Table
+    global Table,name_list
 
     i = 0
     stack = ['0']
@@ -202,7 +203,21 @@ def stackimp(input_string):
             stack.pop(stack.__len__() - 1)
             popList.append(addNode(stack.pop(stack.__len__()-1)))
 
-            parent = addNode('stmt-seq')
+
+            parent = ''
+            flag = False
+            if name_list.__len__() != 0:
+
+                for i in reversed(name_list):
+                    if i == 'stmt-seq':
+                        flag = True
+                        break
+                if flag == True:
+                    parent = str(len(name_list) - name_list[::-1].index('stmt-seq') - 2)
+                else:
+                    parent = addNode('stmt-seq')
+            else:
+                parent = addNode('stmt-seq')
             stack.append('stmt-seq')
             stack.append(Table[int(stack[stack.__len__()-2])][colomB.index('stmt-seq')])
             for child in popList:
@@ -215,9 +230,21 @@ def stackimp(input_string):
             popList.append(addNode(stack.pop(stack.__len__() - 1)))
             stack.append('stmt-seq')
             stack.append(Table[int(stack[stack.__len__()-2])][colomB.index('stmt-seq')])
-            parent = addNode('stmt-seq')
+            flag = False
+            if name_list.__len__() != 0:
+
+                for i in reversed(name_list):
+                    if i == 'stmt-seq':
+                        flag = True
+                        break
+                if flag == True:
+                    parent = str(len(name_list) - name_list[::-1].index('stmt-seq') - 2)
+                else:
+                    parent = addNode('stmt-seq')
+            else:
+                parent = addNode('stmt-seq')
             for child in popList:
-                addEgde(child,parent)
+                addEgde(parent,child)
 
 
             print(stack)
@@ -226,7 +253,19 @@ def stackimp(input_string):
             stack.pop(stack.__len__()-1)
             popList.append(addNode(stack.pop(stack.__len__() - 1)))
             stack.append('statement')
-            parent = addNode('statement')
+            flag = False
+            if name_list.__len__() != 0:
+
+                for i in reversed(name_list):
+                    if i == 'statement':
+                        flag = True
+                        break
+                if flag == True:
+                    parent = str(len(name_list) - name_list[::-1].index('statement') - 2)
+                else:
+                    parent = addNode('statement')
+            else:
+                parent = addNode('statement')
             stack.append(Table[int(stack[stack.__len__()-2])][colomB.index('statement')])
             for child in popList:
                 addEgde(parent, child)
@@ -236,7 +275,20 @@ def stackimp(input_string):
             stack.pop(stack.__len__()-1)
             popList.append(addNode(stack.pop(stack.__len__() - 1)))
             stack.append('statement')
-            parent = addNode('statement')
+            flag = False
+            if name_list.__len__() != 0:
+
+                for i in reversed(name_list):
+                    if i == 'statement':
+                        flag = True
+                        break
+                if flag == True:
+                    parent = str(len(name_list) - name_list[::-1].index('statement') - 2)
+                else:
+                    parent = addNode('statement')
+            else:
+                parent = addNode('statement')
+            stack.append(Table[int(stack[stack.__len__() - 2])][colomB.index('statement')])
             stack.append(Table[int(stack[stack.__len__()-2])][colomB.index('statement')])
             for child in popList:
                 addEgde(parent, child)
@@ -252,7 +304,19 @@ def stackimp(input_string):
             stack.pop(stack.__len__() - 1)
             popList.append(addNode(stack.pop(stack.__len__() - 1)))
             stack.append('repeat-stmt')
-            parent = addNode('repeat-stmt')
+            flag = False
+            if name_list.__len__() != 0:
+
+                for i in reversed(name_list):
+                    if i == 'repeat-stmt':
+                        flag = True
+                        break
+                if flag == True:
+                    parent = str(len(name_list) - name_list[::-1].index('repeat-stmt') - 2)
+                else:
+                    parent = addNode('repeat-stmt')
+            else:
+                parent = addNode('repeat-stmt')
             stack.append(Table[int(stack[stack.__len__()-2])][colomB.index('repeat-stmt')])
             for child in popList:
                 addEgde(parent, child)
@@ -268,7 +332,19 @@ def stackimp(input_string):
             stack.pop(stack.__len__() - 1)
             popList.append(addNode(stack.pop(stack.__len__() - 1)))
             print(popList)
-            parent = addNode('assign-stmt')
+            flag = False
+            if name_list.__len__() != 0:
+
+                for i in reversed(name_list):
+                    if i == 'assign-stmt':
+                        flag = True
+                        break
+                if flag == True:
+                    parent = str(len(name_list) - name_list[::-1].index('assign-stmt') - 2)
+                else:
+                    parent = addNode('assign-stmt')
+            else:
+                parent = addNode('assign-stmt')
             stack.append('assign-stmt')
             stack.append(Table[int(stack[stack.__len__()-2])][colomB.index('assign-stmt')])
             for child in popList:
@@ -279,7 +355,19 @@ def stackimp(input_string):
             stack.pop(stack.__len__() - 1)
             popList.append(addNode(stack.pop(stack.__len__() - 1)))
             stack.append('factor')
-            parent = addNode('factor')
+            flag = False
+            if name_list.__len__() != 0:
+
+                for i in reversed(name_list):
+                    if i == 'factor':
+                        flag = True
+                        break
+                if flag == True:
+                    parent = str(len(name_list) - name_list[::-1].index('factor') - 2)
+                else:
+                    parent = addNode('factor')
+            else:
+                parent = addNode('factor')
             stack.append(Table[int(stack[stack.__len__()-2])][colomB.index('factor')])
             for child in popList:
                 addEgde(parent, child)
@@ -289,7 +377,21 @@ def stackimp(input_string):
             stack.pop(stack.__len__() - 1)
             popList.append(addNode(stack.pop(stack.__len__() - 1)))
             stack.append('factor')
-            parent = addNode('factor')
+
+            parent = ''
+            flag = False
+            if name_list.__len__() != 0:
+
+                for i in reversed(name_list):
+                    if i == 'factor':
+                        flag = True
+                        break
+                if flag == True:
+                    parent = str(len(name_list) - name_list[::-1].index('factor') - 2)
+                else:parent = addNode('factor')
+            else:
+                parent = addNode('factor')
+
             stack.append(Table[int(stack[stack.__len__()-2])][colomB.index('factor')])
             for child in popList:
                 addEgde(parent,child)
@@ -303,6 +405,8 @@ def addNode(state):
     name_list.append(state)
 
     name_list = [name for name in name_list if not name.isnumeric()]
+    print('=====================================================================================================')
+    print(name_list)
     NodeUniqueName +=1
     return name
 

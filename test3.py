@@ -408,7 +408,8 @@ def stackimp(input_string):
             print(stack)
 
 def addNode(state):
-    global NodeUniqueName , name_list
+    global dot
+    global NodeUniqueName, name_list, user_input_splited, idrep
     name = str(NodeUniqueName)
     dot.node(name,state)
 
@@ -868,87 +869,104 @@ def printAllGOTO(diction):
 
 # example sample set 01
 
-
-
-user_input = input("enter tokens")
-# for parse tree
-NodeUniqueName = 0
-dot = graphviz.Digraph('The Round Table', filename='ss.gv')
-name_list =[]
-
-if check_statment(user_input) == 'valid':
-    print(statment_accept(user_input))
-    my_tokens = statment_accept(user_input)
-
-else:
-    print('invalid state')
-    exit()
-
-
-
-
-rules=["stmt-seq -> stmt-seq statement | statement",
-       "statement -> repeat-stmt | assign-stmt",
-       "repeat-stmt -> repeat stmt-seq until Identifier",
-       "assign-stmt -> Identifier := factor ;",
-       " factor -> Identifier | Number"
-    ]
-nonterm_userdef = ["stmt-seq", "statement", "repeat-stmt", "assign-stmt", "factor"]
-term_userdef = ['Identifier', 'Number', ':=', 'repeat', 'until', ';']
-start_symbol = nonterm_userdef[0]
-
-
-
-# rules section - END
-print("\nOriginal grammar input:\n")
-for y in rules:
-    print(y)
-
-# print processed rules
-print("\nGrammar after Augmentation: \n")
-seperatedRulesList = \
-    grammarAugmentation(rules,
-                        nonterm_userdef,
-                        start_symbol)
-printResult(seperatedRulesList)
-
-# find closure
-start_symbol = seperatedRulesList[0][0]
-print("\nCalculated closure: I0\n")
-I0 = findClosure(0, start_symbol)
-printResult(I0)
-
-# use statesDict to store the states
-# use stateMap to store GOTOs
+start_symbol=[]
+seperatedRulesList=[]
 statesDict = {}
 stateMap = {}
 Table = []
-
-# add first state to statesDict
-# and maintain stateCount
-# - for newState generation
-statesDict[0] = I0
-stateCount = 0
-
-# computing states by GOTO
-generateStates(statesDict)
-
-# print goto states
-print("\nStates Generated: \n")
-for st in statesDict:
-    print(f"State = I{st}")
-    printResult(statesDict[st])
-    print()
-
-print("Result of GOTO computation:\n")
-printAllGOTO(stateMap)
-
-# "follow computation" for making REDUCE entries
 diction = {}
+stateCount = 0
+term_userdef=[]
+rules=[]
+name_list =[]
+NodeUniqueName = 0
+idrep=0
+dot = graphviz.Digraph('The Round Table', filename='pTree.gv')
+user_input_splited=''
+def main():
+    global start_symbol, diction , statesDict,stateMap,\
+        Table,seperatedRulesList,\
+        stateCount,rules,term_userdef,\
+        name_list,NodeUniqueName,idrep,dot,user_input_splited
+    user_input = input("enter tokens")
+    user_input_splited = user_input.split(" ")
+    print(user_input_splited)
+    # for parse tree
 
-# call createParseTable function
-createParseTable(statesDict, stateMap,
-                 term_userdef,
-                 nonterm_userdef)
-print(stackimp(my_tokens))
-dot.view()
+
+
+    if check_statment(user_input) == 'valid':
+        print(statment_accept(user_input))
+        my_tokens = statment_accept(user_input)
+
+    else:
+        print('invalid state')
+        exit()
+
+
+
+
+    rules=["stmt-seq -> stmt-seq statement | statement",
+           "statement -> repeat-stmt | assign-stmt",
+           "repeat-stmt -> repeat stmt-seq until Identifier",
+           "assign-stmt -> Identifier := factor ;",
+           " factor -> Identifier | Number"
+        ]
+    nonterm_userdef = ["stmt-seq", "statement", "repeat-stmt", "assign-stmt", "factor"]
+    term_userdef = ['Identifier', 'Number', ':=', 'repeat', 'until', ';']
+    start_symbol = nonterm_userdef[0]
+
+
+
+    # rules section - END
+    print("\nOriginal grammar input:\n")
+    for y in rules:
+        print(y)
+
+    # print processed rules
+    print("\nGrammar after Augmentation: \n")
+    seperatedRulesList = \
+        grammarAugmentation(rules,
+                            nonterm_userdef,
+                            start_symbol)
+    printResult(seperatedRulesList)
+
+    # find closure
+    start_symbol = seperatedRulesList[0][0]
+    print("\nCalculated closure: I0\n")
+    I0 = findClosure(0, start_symbol)
+    printResult(I0)
+
+    # use statesDict to store the states
+    # use stateMap to store GOTOs
+
+
+    # add first state to statesDict
+    # and maintain stateCount
+    # - for newState generation
+    statesDict[0] = I0
+
+
+    # computing states by GOTO
+    generateStates(statesDict)
+
+    # print goto states
+    print("\nStates Generated: \n")
+    for st in statesDict:
+        print(f"State = I{st}")
+        printResult(statesDict[st])
+        print()
+
+    print("Result of GOTO computation:\n")
+    printAllGOTO(stateMap)
+
+    # "follow computation" for making REDUCE entries
+
+
+    # call createParseTable function
+    createParseTable(statesDict, stateMap,
+                     term_userdef,
+                     nonterm_userdef)
+    print(stackimp(my_tokens))
+    dot.view()
+main()

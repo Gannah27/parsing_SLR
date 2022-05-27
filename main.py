@@ -49,7 +49,7 @@ def check_statment(code_in):
             else:
                 return 'Invalid statement4'
         while(until_num>-1):
-            if i > len(code_in):
+            if i >= len(code_in):
                 return 'Invalid statement5'
             elif (i + 3 < len(code_in)) and until_num==0:
 
@@ -938,6 +938,7 @@ def start_point(user_input):
         name_list,NodeUniqueName,idrep,dot,my_tokens
     print("start function")
     if check_statment(user_input) == 'valid':
+
         print(check_statment(user_input))
         my_tokens=statment_accept(user_input)
         print(statment_accept(user_input))
@@ -995,7 +996,6 @@ def start_point(user_input):
                          term_userdef,
                          nonterm_userdef)
         print(stackimp(my_tokens))
-
 
     else:
         global root

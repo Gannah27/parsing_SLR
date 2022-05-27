@@ -48,6 +48,8 @@ def check_statment(code_in):
                      return 'Invalid statement3'
             else:
                 return 'Invalid statement4'
+            if i >= len(code_in):
+                return 'Invalid statement4'
         while(until_num>-1):
             if i >= len(code_in):
                 return 'Invalid statement5'

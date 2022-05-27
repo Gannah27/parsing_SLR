@@ -59,6 +59,8 @@ def check_statment(code_in):
         while(until_num>-1):
             if i >= len(code_in):
                 return 'Invalid statement5'
+            if i + 1 >= len(code_in):
+                return 'Invalid statement5'
             elif (i + 3 < len(code_in)) and until_num==0:
                 return 'Invalid statement6'
             elif (code_in[i] == tokensLoop[1]) and (re.fullmatch(ID, code_in[i + 1])):
@@ -66,7 +68,6 @@ def check_statment(code_in):
                 i+=2
 
             else:
-
                 return "Invalid statement7"
         return "valid"
     elif re.fullmatch(ID, code_in[0]):
@@ -945,7 +946,6 @@ def start_point(user_input):
         name_list,NodeUniqueName,idrep,dot,my_tokens
     print("start function")
     if check_statment(user_input) == 'valid':
-
         print(check_statment(user_input))
         my_tokens=statment_accept(user_input)
         print(statment_accept(user_input))

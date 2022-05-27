@@ -34,27 +34,32 @@ def check_statment(code_in):
 
             if (re.fullmatch(ID, code_in[i])) and i < len(code_in):
                  i+=1
+                 if i >= len(code_in):
+                     return 'Invalid statement4'
                  if(re.fullmatch(assignment, code_in[i ])) and i < len(code_in):
                       i+=1
+                      if i >= len(code_in):
+                          return 'Invalid statement'
                       if(re.fullmatch(ID, code_in[i ]) or re.fullmatch(NUM, code_in[i ]))and i < len(code_in):
                           i+=1
+                          if i >= len(code_in):
+                              return 'Invalid statement'
                           if(code_in[i ] == tokensID[1]) and i < len(code_in):
                                      i+=1
                           else:
-                              return 'Invalid statement1'
+                              return 'Invalid statement'
                       else:
                           return 'Invalid statement2'
                  else:
-                     return 'Invalid statement3'
+                     return 'Invalid statement'
             else:
-                return 'Invalid statement4'
+                return 'Invalid statement'
             if i >= len(code_in):
-                return 'Invalid statement4'
+                return 'Invalid statement'
         while(until_num>-1):
             if i >= len(code_in):
                 return 'Invalid statement5'
             elif (i + 3 < len(code_in)) and until_num==0:
-
                 return 'Invalid statement6'
             elif (code_in[i] == tokensLoop[1]) and (re.fullmatch(ID, code_in[i + 1])):
                 until_num = until_num - 1
